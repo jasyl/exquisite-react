@@ -13,6 +13,12 @@ const Game = () => {
     }
   }).join(' ');
 
+  const [PoemLines, setPoemLines] = useState([]);
+
+  const onSubmitHandler(e, newLine) {
+    setPoemLines([...PoemLines, newLine]);
+  }
+
   return (
     <div className="Game">
       <h2>Game</h2>
@@ -25,11 +31,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission />
+      <RecentSubmission recentLine={PoemLines[PoemLines.length - 1]} />
 
-      <PlayerSubmissionForm />
+      <PlayerSubmissionForm onSubmitCallback={onSubmitHandler}/>
 
-      <FinalPoem />
+      <FinalPoem finalPoem={PoemLines}/>
 
     </div>
   );
