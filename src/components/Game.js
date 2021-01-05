@@ -13,10 +13,14 @@ const Game = () => {
     }
   }).join(' ');
 
-  const [PoemLines, setPoemLines] = useState([]);
+  const [poemLines, setPoemLines] = useState([]);
 
-  const onSubmitHandler(e, newLine) {
-    setPoemLines([...PoemLines, newLine]);
+  const onUpdatePoem = (newLine) => {
+
+    const convertLine = `The ${newLine.adjective1} ${newLine.noun1} ${newLine.adverb} ${newLine.verb} the ${newLine.adjective2} ${newLine.noun2}.`;
+    console.log(convertLine);
+    setPoemLines([...poemLines, convertLine]);
+    console.log(poemLines);
   }
 
   return (
@@ -31,11 +35,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission recentLine={PoemLines[PoemLines.length - 1]} />
+      <RecentSubmission submission={poemLines[poemLines.length - 1]} />
 
-      <PlayerSubmissionForm onSubmitCallback={onSubmitHandler}/>
+      <PlayerSubmissionForm sendSubmission={onUpdatePoem} index={poemLines.length + 1} />
 
-      <FinalPoem finalPoem={PoemLines}/>
+      <FinalPoem submissions={poemLines}/>
 
     </div>
   );
