@@ -18,9 +18,13 @@ const Game = () => {
   const onUpdatePoem = (newLine) => {
 
     const convertLine = `The ${newLine.adjective1} ${newLine.noun1} ${newLine.adverb} ${newLine.verb} the ${newLine.adjective2} ${newLine.noun2}.`;
-    console.log(convertLine);
     setPoemLines([...poemLines, convertLine]);
-    console.log(poemLines);
+
+  }
+
+  const isSubmitted = (e) => {
+    console.log(e);
+    console.log('is submitted!')
   }
 
   return (
@@ -34,8 +38,8 @@ const Game = () => {
       <p className="Game__format-example">
         { exampleFormat }
       </p>
-
-      <RecentSubmission submission={poemLines[poemLines.length - 1]} />
+    
+      <RecentSubmission submission={poemLines[poemLines.length - 1]} revealPoem={true} isSubmitted={isSubmitted} />
 
       <PlayerSubmissionForm sendSubmission={onUpdatePoem} index={poemLines.length + 1} />
 
