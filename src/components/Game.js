@@ -14,17 +14,23 @@ const Game = () => {
   }).join(' ');
 
   const [poemLines, setPoemLines] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onUpdatePoem = (newLine) => {
 
-    const convertLine = `The ${newLine.adjective1} ${newLine.noun1} ${newLine.adverb} ${newLine.verb} the ${newLine.adjective2} ${newLine.noun2}.`;
-    setPoemLines([...poemLines, convertLine]);
+    const formatLine = FIELDS.map((field) => {
+      if (field.key) {
+        return newLine[field.key];
+      } else {
+        return field;
+      }
+    }).join(' ');
 
+    setPoemLines([...poemLines, formatLine]);
   }
 
-  const isSubmitted = (e) => {
-    console.log(e);
-    console.log('is submitted!')
+  const revealPoem = () => {
+    setIsSubmitted(true);
   }
 
   return (
@@ -38,12 +44,12 @@ const Game = () => {
       <p className="Game__format-example">
         { exampleFormat }
       </p>
-    
-      <RecentSubmission submission={poemLines[poemLines.length - 1]} revealPoem={true} isSubmitted={isSubmitted} />
+      {/* this doesn't feel super dry with the !isSubmitted twice */}
+      {!isSubmitted && <RecentSubmission submission={poemLines[poemLines.length - 1] || ''}  /> }
 
-      <PlayerSubmissionForm sendSubmission={onUpdatePoem} index={poemLines.length + 1} />
+      {!isSubmitted && <PlayerSubmissionForm sendSubmission={onUpdatePoem} index={poemLines.length + 1} fields={FIELDS}/>}
 
-      <FinalPoem submissions={poemLines}/>
+      <FinalPoem submissions={poemLines} revealPoem={revealPoem} isSubmitted={isSubmitted}/>
 
     </div>
   );
