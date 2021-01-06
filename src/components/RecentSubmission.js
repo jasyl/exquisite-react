@@ -12,7 +12,7 @@ const RecentSubmission = (props) => {
     );
   } else {
     return (
-      <></>
+      null
     )
   }
 
